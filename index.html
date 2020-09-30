@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script
+            src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+            crossorigin="anonymous">
+        </script>
+
+        <script>
+          $(document).ready(function() {
+            $('#namecheck').hide();
+            $('#emailcheck').hide();
+            $('#passcheck').hide();
+            $('#conpasscheck').hide();
+            $('#n1').hide();$('#n2').hide();
+            $('#e1').hide();$('#e2').hide();
+            $('#p1').hide();$('#p2').hide();
+            $('#cp1').hide();$('#cp2').hide();
+            
+            var name_err = true;
+            var email_err = true;
+            var pass_err = true;
+            var conpass_err = true;
+            $('#names').keyup(function(){
+               names_check(); 
+            });
+           
+            function names_check(){
+
+              var names_val = $('#names').val();
+              
+              if(names_val.length == ''){
+                $('#namecheck').show();
+                $('#namecheck').html("Please Fill The Name");
+                $('#namecheck').focus();
+                $('#n1').show();
+                $('#n2').hide();
+                name_err = false;
+                return false;        
+                }else{
+                  $('#namecheck').hide();
+                  $('#n1').hide();
+                  $('#n2').show();
+                }
+              if( (names_val.length < 5 )  || (names_val.length > 20) ){
+                $('#namecheck').show();
+                $('#namecheck').html("Name Length must be between 5 & 20");
+                $('#namecheck').focus();
+                $('#n1').show();
+                $('#n2').hide();
+                name_err = false;
+                return false;        
+                }else{
+                  $('#namecheck').hide();
+                  $('#n1').hide();
+                  $('#n2').show();
+                }  
+            }
+            $('#password').keyup(function(){
+               password_check(); 
+            });
+
+            function password_check(){
+              var passwrdstr = $('#password').val();
+              if(passwrdstr.length == ''){
+                $('#passcheck').show();
+                $('#passcheck').html("Password Can't Be Empty");
+                $('#passcheck').focus();
+                $('#p1').show();
+                $('#p2').hide();
+                pass_err = false;
+                return false;        
+                }else{
+                  $('#passcheck').hide();
+
+                }
+              if( (passwrdstr.length < 6 ) ){
+                $('#passcheck').show();
+                $('#passcheck').html("Password can't be less than 6 Characters");
+                $('#passcheck').focus();
+                $('#p1').show();
+                $('#p2').hide();
+                pass_err = false;
+                return false;        
+                }else{
+                  $('#passcheck').hide();
+                  $('#p2').show();
+                  $('#p1').hide();
+                }  
+            }
+
+            $('#confpass').keyup(function(){
+              con_passwrd();
+            });
+
+            function con_passwrd(){
+              var conpass = $('#confpass').val();
+              var passwrdstr = $('#password').val();
+              if(conpass.length == ''){
+                $('#conpasscheck').show();
+                $('#conpasscheck').html("Password Can't Be Empty");
+                $('#conpasscheck').focus();
+                $('#cp1').show();
+                $('#cp2').hide();
+                pass_err = false;
+                return false;        
+                }else{
+                  $('#conpasscheck').hide();
+
+                }  
+              if(passwrdstr != conpass){
+                $('#conpasscheck').show();
+                $('#conpasscheck').html("Passwords Do Not Match");
+                $('#conpasscheck').focus();
+                $('#cp1').show();
+                $('#cp2').hide();
+                conpass_err = false;
+                return false;        
+                }else{
+                  $('#conpasscheck').hide();
+                  $('#e1').hide();
+              
+                }
+                if((passwrdstr == conpass) && (conpass.length > 5)){
+                  $('#cp2').show();
+                $('#cp1').hide();
+                }
+             }
+
+             $('#email').keyup(function(){
+              email_check();
+            });
+            
+            function email_check(){
+              var emails = $('#email').val();
+
+              if(emails.length == ''){
+                $('#emailcheck').show();
+                $('#emailcheck').html("Email Can't Be Empty");
+                $('#emailcheck').focus();
+                $('#e2').hide();
+                $('#e1').show();
+                pass_err = false;
+                return false;        
+                }else{
+                  $('#emailcheck').hide();
+                }
+
+              if(IsEmail(emails)==false){
+                $('#emailcheck').show();
+                $('#emailcheck').html("Email Not in Proper Format");
+                $('#emailcheck').focus();
+                $('#e2').hide();
+                $('#e1').show();
+                email_err = false;
+                return false;
+              }else{
+                $('#e1').hide();
+                $('#e2').show();
+                $('#emailcheck').hide();
+              }
+
+            }
+
+
+            function IsEmail(email) {
+                    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                    if(!regex.test(email)) {
+                      return false;
+                    }else{
+                      return true;
+                    }
+                  }
+            
+             $('#submitbtn').click(function(){
+             name_err = true;
+             email_err = true;
+             pass_err = true;
+             conpass_err = true;
+
+             names_check();
+             password_check();
+             con_passwrd();
+             email_check();
+
+              if((name_err == true) && (email_err == true) && (pass_err == true) && ( conpass_err == true) ){
+                return true;
+              }else{
+                return false;
+              }
+
+             });
+
+             
+              $('#helpinfo').hide();
+            $('#info_button').on('click', function() {
+              $('#helpinfo').toggle(2000);
+            });
+            $('#r_form').click(function(){
+             $('#box').slideToggle(1000);
+            });
+            
+
+
+          });
+        
+        </script>
+
+    <style type="text/css">
+        * {
+              margin:0;
+              padding:0;
+          }
+          .main{
+              background-color: rgb(0,0,0,0.5);
+              width:700px;
+              height:720px;
+              margin:auto;
+              border-radius: 0px 0px 15px 15px;
+             }
+        body {
+          background-image: url(sheepsie.jpg);
+            background-position:center;
+            background-size:cover;
+            font-family:Georgia;
+            margin-top:40px;
+              }
+
+        .main label{
+               margin-left:25px;
+               margin-top: 30px;
+               width: 125px;
+               color:white;
+               font-size: 18px;
+               font-weight:700;
+                  }
+        .header {
+                 width: 700px;
+                 background-color: rgb(0,0,0,0.6);
+                 margin:auto;
+                 color:#FFFFFF;
+                 padding:10px 0px 10px 0px;
+                 text-align:center;
+                 border-radius:15px 15px 0px 0px;
+                }
+        #helpinfo {
+          color: blue;
+          text-align: center;
+          background-color: rgb(0,0,0,0.2);
+          border-radius:15px 15px 15px 15px;
+          width:400px;
+        }        
+        #names{
+                   border:2px solid #f0f0f0;
+                   position:relative;
+                   left:13px;
+                   top:20px;
+                   line-height: 40px;
+                   border-radius: 6px;
+                   padding:0 22px;
+                   font-size: 16px;
+                   width:300px;
+                   height:45px;
+              }
+        #email{
+                   border:2px solid #f0f0f0;
+                   position:relative;
+                   left:150px;
+                   top:-37px;
+                   line-height: 40px;
+                   border-radius: 6px;
+                   padding:0 22px;
+                   font-size: 16px;
+                   width:300px;
+              }
+        #password{
+                   border:2px solid #f0f0f0;
+                   position:relative;
+                   left:150px;
+                   top:-37px;
+                   line-height: 40px;
+                   border-radius: 6px;
+                   padding:0 22px;
+                   font-size: 16px;
+                   width:300px;
+                 }
+        #confpass{
+                   border:2px solid #f0f0f0;
+                   position:relative;
+                   left:150px;
+                   top:-37px;
+                   line-height: 40px;
+                   border-radius: 6px;
+                   padding:0 22px;
+                   font-size: 16px;
+                   width:300px;
+                 }
+                          
+        .form {
+               padding: 30px 40px;	
+               }
+
+        .regform {
+                  margin-bottom: 10px;
+                  padding-bottom: 20px;
+                  position: relative;
+                  }
+
+        .regform label {
+                         display: inline-block;
+                         margin-bottom: 5px;
+                        }
+
+        .regform input {
+                        border: 2px solid #f0f0f0;
+                        border-radius: 4px;
+                        display: block;
+                        font-family: inherit;
+                        font-size: 14px;
+                        padding: 10px ;
+                        width: 70%;
+                        }
+        
+
+        
+        #n1,#n2  {  
+                      font-size: 1.6em;
+                      position: absolute;
+                      top: 29px;
+                      left: 410px;
+                   }
+        #e1,#e2   {
+                      
+                      font-size: 1.6em;
+                      position: absolute;
+                      top: 34px;
+                      left: 410px;
+                   }
+        #p1,#p2   {
+                      
+                      font-size: 1.6em;
+                      position: absolute;
+                      top: 34px;
+                      left: 410px;
+                   } 
+        #cp1,#cp2   {
+                      
+                      font-size: 1.6em;
+                      position: absolute;
+                      top: 60px;
+                      left: 410px;
+                   }                                              
+        .regform h6 {
+                          
+                          position:absolute;
+                          color: #f71900;
+                          bottom: -20px;
+                          right:0;      
+                           }            
+    /*    .regform.success i.fa-check-circle {
+                                              color: #2ecc71;
+                                              visibility: visible;
+                                            }
+
+        .regform.error i.fa-exclamation-circle {
+                                                  color: #e74c3c;
+                                                  visibility: visible;
+                                                } */
+
+          
+                      
+
+        .regform.error h6 {
+                                visibility: visible;
+                  
+                              }
+
+        
+        .register{
+                 position: relative;
+                 left: 450px;
+                 top: -70px;
+                 }              
+
+        button{ 
+                background-color: #00ad6b;
+                display:block;
+                margin:20px 0px 0px 20px;
+                text-align:center;
+                border-radius: 12px;
+                border: 2px solid #1fa83d;
+                padding:14px 50px;
+                outline:none;
+                color:white;
+                cursor:pointer;
+                transition: 0.25px;
+              }
+              .register:hover{
+                            background-color: #b98ba2;
+                          } 
+        #r_form{ position:absolute;
+                font-size: 300px;
+                color:rgb(0,0,0,0);
+                cursor:pointer; 
+                margin:00px 0px 0px 00px;
+                padding:0px 0px;
+                left:0px;
+                top:0px;
+              }                  
+      
+       #info_button {
+        margin:20px 0px 0px 20px;
+        padding:14px 50px;
+        cursor:help;
+       }                             
+    </style>
+    <script src="https://kit.fontawesome.com/fc488c02c8.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      /*  function run(){
+            const form = document.getElementById('form');
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const confpass = document.getElementById('confpass');
+
+            form.addEventListener('submit', e => {
+              e.preventDefault();
+              
+              checkInputs();
+            });
+
+            function checkInputs() {
+              const nameValue = name.value.trim();
+              const emailValue = email.value.trim();
+              const passwordValue = password.value.trim();
+              const confpassValue = confpass.value.trim();
+              
+              if(nameValue === '') {
+                setErrorFor(name, 'Name cannot be blank');
+              } 
+              else {
+                setSuccessFor(name);
+              }
+              
+              if(emailValue === '') {
+                setErrorFor(email, 'Email cannot be blank');
+              }
+               else if (!isEmail(emailValue)) {
+                setErrorFor(email, 'Not a valid email');
+              } 
+              else {
+                setSuccessFor(email);
+              }
+              
+              if(passwordValue === '') {
+                setErrorFor(password, 'Password cannot be blank');
+              }
+               else {
+                setSuccessFor(password);
+              }
+              
+              if(confpassValue === '') {
+                setErrorFor(confpass, 'Passwords cannot be blank');
+              }
+               else if(passwordValue !== confpassValue) {
+                setErrorFor(confpass, 'Passwords does not match');
+              } 
+              else{
+                setSuccessFor(confpass);
+              }
+            }
+
+            function setErrorFor(input, message) {
+              const formControl = input.parentElement;
+              const h6 = formControl.querySelector('h6');
+              formControl.className = 'regform error';
+              h6.innerText = message;
+            }
+
+            function setSuccessFor(input) {
+              const formControl = input.parentElement;
+              formControl.className = 'regform success';
+            }
+              
+            function isEmail(email) {
+              return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+            }
+    }*/
+    </script>
+  </head>
+  <body>
+    
+    <div class="container-fluid">
+      <div class="col-lr-4 m-auto d-block">
+      <div class="header"><div id="box"><h1>Registration Form</h1></div> </div> 
+      <div class="main">
+                          
+                <form id="form" class="form">
+                  <div class="regform">
+                    <div class="row">
+                    <label for="name">Name</label>
+                    <input type="text" placeholder="Aniket Namdeo" id="names" autocomplete="off" />
+                  </div>
+                    <i class="fas fa-check-circle" id="n2" style="color:green"></i>
+                    <i class="fas fa-exclamation-circle" id="n1" style="color:red"></i>
+                    <h6 id="namecheck">Error message</h6>
+                  </div>
+                  <div class="regform">
+                    <label for="name">Email</label>
+                    <input type="email" placeholder="annie8047@gmail.com" id="email" autocomplete="off" />
+                    <i class="fas fa-check-circle" id="e2" style="color:green"></i>
+                    <i class="fas fa-exclamation-circle" id="e1" style="color:red"></i>
+                    <h6 id="emailcheck">Error message</h6>
+                  </div>
+                  <div class="regform">
+                    <label for="name">Password</label>
+                    <input type="password" placeholder="Password" id="password"/>
+                    <i class="fas fa-check-circle" id="p2" style="color:green"></i>
+                    <i class="fas fa-exclamation-circle" id="p1" style="color:red"></i>
+                    <h6 id="passcheck">Error message</h6>
+                  </div>
+                  <div class="regform">
+                    <label for="name">Confirm Password</label>
+                    <input type="password" placeholder="Enter The Same Password Again" id="confpass" />
+                    <i class="fas fa-check-circle" id="cp2" style="color:green"></i>
+                    <i class="fas fa-exclamation-circle" id="cp1" style="color:red"></i>
+                    <h6 id="conpasscheck">Error message</h6>
+                  </div>
+                  <button type="button" class="btn btn-info" id="info_button">Help</button>
+                  <button class="register" type="submit" id="submitbtn" >Submit</button>
+                  <!--button class="register" type="submit" onclick="run()" >Submit</!--button--> 
+                </form>
+                <div class="col-md-4">
+                  <p id="helpinfo">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Alias 
+                    soluta doloribus provident incidunt officiis ullam rerum porro recusandae
+                     quo assumenda, ipsum saepe, eum debitis placeat dolore fugit! Fuga, cum sint. </p></div>
+              </div> 
+              </div>    
+            </div>  
+  </body>
+</html>
